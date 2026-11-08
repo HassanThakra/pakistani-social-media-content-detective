@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block page_id %}landing{% endblock %}
+{% block body %}
+<main id="main">
+  <section class="hero wrap">
+    <h1>Type a YouTube channel. See what its data does and doesn’t show.</h1>
+    <p class="lede">Data Detective fetches a channel’s public videos, cleans them, explores them, and writes up each finding with its evidence and its limits beside it.</p>
+
+    <form id="search-form" class="search" novalidate>
+      <label for="q" class="search-label">YouTube channel or brand name</label>
+      <div class="search-row">
+        <input id="q" name="q" type="text" inputmode="text" autocomplete="off" autocapitalize="off" spellcheck="false" maxlength="120"
+               placeholder="@channelname, a channel link, or a brand name" aria-describedby="q-help" required>
+        <button id="go" class="btn primary big" type="submit">Analyse channel</button>
+      </div>
+      <div class="search-opts">
+        <label for="nvideos">Videos to fetch</label>
+        <select id="nvideos" name="nvideos">
+          <option value="100">Latest 100</option>
+          <option value="200" selected>Latest 200</option>
+          <option value="300">Latest 300</option>
+        </select>
+      </div>
+      <p id="q-help" class="muted">A channel link or @handle goes straight to the data. A brand name first shows channels to choose from, because search also returns reviews and fan pages.</p>
+      <div id="status" class="status" role="status" aria-live="polite"></div>
+      <p id="search-error" class="error" role="alert" hidden></p>
+      <div id="candidates" class="candidates" hidden></div>
+      <div id="disabled-note" class="callout warn" hidden>This site has no YouTube API key set up yet, so live fetching is off. You can still explore the <a href="/workbench">CSV workbench</a> with the bundled dataset or your own file.</div>
+    </form>
+  </section>
+
+  <section class="wrap band" aria-labelledby="rules-h">
+    <h2 id="rules-h">How the evidence is handled</h2>
+    <dl class="rules">
+      <div><dt>Views are not reach</dt><dd>YouTube’s public data has views, not reach. Nothing here is called reach or an engagement rate on reach.</dd></div>
+      <div><dt>Hidden is not zero</dt><dd>If a creator hides likes or turns comments off, those videos are missing for that measure. They are never counted as 0.</dd></div>
+      <div><dt>Small groups are flagged</dt><dd>Every comparison shows how many videos are in each group. Channels with few videos get warnings, and the models switch off below 40.</dd></div>
+      <div><dt>The snapshot is recorded</dt><dd>Live data changes daily. Each report prints when it was fetched, what was typed, and the channel ID.</dd></div>
+    </dl>
+  </section>
+
+  <section class="wrap band" aria-labelledby="pages-h">
+    <h2 id="pages-h">What you get</h2>
+    <ol class="pages-list">
+      <li><strong>Overview</strong> a one-screen summary and the top videos, linked back to YouTube.</li>
+      <li><strong>Cleaned data</strong> what was checked, what was fixed, and what was left blank on purpose.</li>
+      <li><strong>Explore</strong> charts and tables with group sizes next to every number.</li>
+      <li><strong>What it means</strong> Finding, Evidence, Action and Limitation for each pattern.</li>
+      <li><strong>Scaling</strong> the same analysis on repeated copies of the data, to see how Pandas behaves as it grows.</li>
+      <li><strong>Models</strong> classification, clustering and regression previews with a baseline and a leakage guard.</li>
+      <li><strong>Report</strong> a download and a link you can share for a few hours.</li>
+    </ol>
+  </section>
+</main>
+{% endblock %}

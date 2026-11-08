@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block page_id %}how{% endblock %}
+{% block body %}
+<main id="main" class="wrap prose">
+  <h1>How it works</h1>
+  <ol class="how">
+    <li><h2>Fetch</h2><p>You type a channel link, an @handle, a channel ID or a brand name. For a brand name, we show channels that match and you pick the right one. Then the site asks the official YouTube Data API for the channel’s latest videos: title, publish time, length, views, likes and comments. A channel link costs about 10 units of YouTube quota; a brand-name search costs 100, so the site caches results.</p></li>
+    <li><h2>Inspect and clean</h2><p>We check for repeated videos and impossible values, and we keep hidden counts as missing, never as zero. The cleaning is done on a copy, and every step is listed.</p></li>
+    <li><h2>Explore</h2><p>Medians and means by group with the number of videos next to each, a histogram, and a scatter plot. Groups with fewer than 10 videos are flagged.</p></li>
+    <li><h2>What it means</h2><p>Each pattern is written as Finding, Evidence, Action and Limitation, using only numbers from this fetch. Comparisons that rest on small groups say so instead of making a claim.</p></li>
+    <li><h2>Sentiment</h2><p>When you ask, the site collects public comments (on the brand’s own videos, on other people’s videos that mention the brand, or both), removes duplicates, spam and links, and tags each as English or Roman Urdu. Each comment is scored positive, neutral or negative by a word-list scorer (or a multilingual model, if the site has one), and the page shows shares, a trend, topics and a few example comments. The scorer is an estimate: it misses sarcasm, and its accuracy is shown only if it was measured on comments a person labelled. Collecting costs shared YouTube quota; narrowing by language, source or date afterwards costs none.</p></li>
+    <li><h2>Scaling</h2><p>A channel has a few hundred videos, which is tiny. The scaling page repeats the rows many times and times the same analysis, to show how Pandas behaves as data grows. Repeated rows are an experiment, not new evidence.</p></li>
+    <li><h2>Models</h2><p>Classification (high or low engagement per 1,000 views), clustering (video profiles) and regression (views). Views, likes and comments, and anything built from them, are never used as inputs. Each model is scored on unseen videos and compared with a simple baseline. Below 40 videos the models switch off.</p></li>
+    <li><h2>Report</h2><p>A Markdown file you can download, a print-friendly view you can save as PDF, and a link you can share. The report prints the snapshot details, because live data changes daily.</p></li>
+  </ol>
+</main>
+{% endblock %}
