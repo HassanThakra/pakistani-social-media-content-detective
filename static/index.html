@@ -1,0 +1,322 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Data Detective</title>
+<meta name="description" content="A guided data-analysis workbench: start with a business question, inspect and clean a social-media dataset, explore it, scale it, and write an evidence-based recommendation.">
+<link rel="icon" type="image/svg+xml" href="/static/favicon.svg">
+<link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="top">
+  <div class="wrap top-row">
+    <div>
+      <p class="eyebrow">BIG DATA ANALYTICS · PROJECT 1</p>
+      <h1>Data Detective</h1>
+      <p class="sub">From social-media records to a marketing decision, with ordinary tools first.</p>
+    </div>
+    <button id="theme-btn" class="btn ghost" type="button" aria-label="Switch colour theme">Theme: auto</button>
+  </div>
+</header>
+
+<div id="databar" class="databar" role="status" aria-live="polite">
+  <div class="wrap"><span id="databar-text">No data loaded yet. Go to step 2 to load some.</span></div>
+</div>
+
+<nav class="tabs" aria-label="Project steps">
+  <div class="wrap">
+    <div class="tablist" role="tablist" aria-label="Project steps">
+      <button role="tab" id="tab-1" aria-controls="panel-1" aria-selected="true"><span class="n">1</span> Question</button>
+      <button role="tab" id="tab-2" aria-controls="panel-2" aria-selected="false" tabindex="-1"><span class="n">2</span> Load &amp; inspect</button>
+      <button role="tab" id="tab-3" aria-controls="panel-3" aria-selected="false" tabindex="-1"><span class="n">3</span> Clean</button>
+      <button role="tab" id="tab-4" aria-controls="panel-4" aria-selected="false" tabindex="-1"><span class="n">4</span> Explore</button>
+      <button role="tab" id="tab-5" aria-controls="panel-5" aria-selected="false" tabindex="-1"><span class="n">5</span> Interpret</button>
+      <button role="tab" id="tab-6" aria-controls="panel-6" aria-selected="false" tabindex="-1"><span class="n">6</span> Scale</button>
+      <button role="tab" id="tab-7" aria-controls="panel-7" aria-selected="false" tabindex="-1"><span class="n">7</span> Analytics</button>
+      <button role="tab" id="tab-8" aria-controls="panel-8" aria-selected="false" tabindex="-1"><span class="n">8</span> Submit</button>
+    </div>
+  </div>
+</nav>
+
+<main id="main" class="wrap">
+
+<!-- ============================================================ 1 QUESTION -->
+<section id="panel-1" role="tabpanel" aria-labelledby="tab-1" tabindex="0">
+  <p class="eyebrow">STEP 1 · THE QUESTION</p>
+  <h2>Start with a business question, not a Big Data tool</h2>
+  <p><strong>Scenario:</strong> A Pakistani clothing brand posts on Instagram. The marketing team wants to understand which content receives attention and what it should publish next.</p>
+  <div class="cards three">
+    <div class="card"><h3>Today's dataset</h3><p>About 2,000 social-media records</p></div>
+    <div class="card"><h3>First tools</h3><p>CSV + Pandas, in your browser here</p></div>
+    <div class="card"><h3>Final outcome</h3><p>A defensible marketing recommendation</p></div>
+  </div>
+  <blockquote class="say"><span class="eyebrow">THE IDEA</span>
+    “We will not start with Hadoop or Spark. First, we will solve a small business problem with ordinary tools. Then we will test what changes when data grows.”</blockquote>
+  <div class="callout blue"><strong>Learning outcome:</strong> You can inspect a dataset, perform basic EDA, explain one limitation of your workflow, and justify when a scalable tool might help.</div>
+
+  <h3 class="spaced">Every course topic appears in the project</h3>
+  <div class="cards four">
+    <div class="card"><h4>What is Big Data?</h4><p>Compare about 2,000 records with a much larger workload (step 6).</p></div>
+    <div class="card"><h4>Why Big Data?</h4><p>Observe runtime, memory, file size, data variety, and repeat-workflow challenges.</p></div>
+    <div class="card"><h4>Data sources</h4><p>Posts, captions, hashtags, comments, and engagement metrics, only where available.</p></div>
+    <div class="card"><h4>Types of data</h4><p>Text, dates, categories, counts, and optional paid-campaign metrics.</p></div>
+    <div class="card"><h4>EDA &amp; data objects</h4><p>Each row is one observation; inspect columns, missing values, duplicates, and distributions.</p></div>
+    <div class="card"><h4>Plots &amp; statistics</h4><p>Counts, mean and median, bar charts, histograms, and scatter plots.</p></div>
+    <div class="card"><h4>Analytics techniques</h4><p>Classification, clustering, and regression as follow-up possibilities.</p></div>
+  </div>
+  <p class="muted">This first project is introductory. You do not need to build three advanced models.</p>
+  <p><button class="btn primary" type="button" data-goto="2">Start: load the data →</button></p>
+</section>
+
+<!-- ============================================================ 2 LOAD -->
+<section id="panel-2" role="tabpanel" aria-labelledby="tab-2" tabindex="0" hidden>
+  <p class="eyebrow">STEP 2 · DATA OBJECTS AND ATTRIBUTES</p>
+  <h2>Load a dataset, then ask: what is one record?</h2>
+  <p class="muted">A repository is a starting point, not a finished assignment. We must inspect the data and understand what each column actually means.</p>
+
+  <fieldset class="source">
+    <legend>Choose a data source</legend>
+    <label class="opt"><input type="radio" name="source" value="bundled" checked>
+      <span><strong>The project dataset</strong><br><small>2,260 social-media posts from the GitHub repository mrudukp/social-media-sentiment-analysis, bundled with this app. It has no stated license, and it is not verified as data from any Pakistani brand.</small></span></label>
+    <label class="opt"><input type="radio" name="source" value="upload">
+      <span><strong>Upload your own CSV</strong><br><small id="upload-hint">Up to 10 MB. Needs a header row.</small></span></label>
+    <div id="upload-row" class="indent" hidden>
+      <label for="file-input" class="visually-hidden">CSV file</label>
+      <input type="file" id="file-input" accept=".csv,text/csv">
+    </div>
+    <p><button id="load-btn" class="btn primary" type="button">Load and inspect</button> <span id="load-status" class="muted" role="status"></span></p>
+    <p id="load-error" class="error" role="alert" hidden></p>
+  </fieldset>
+
+  <div id="inspect-out" hidden>
+    <div id="tiles" class="tiles"></div>
+
+    <h3>What is one record?</h3>
+    <p class="muted">A post, a comment, a user, or a campaign record? These are not interchangeable. Look at the first rows below and write your answer.</p>
+    <label for="note-record" class="visually-hidden">What is one record?</label>
+    <textarea id="note-record" data-note="record" rows="2" placeholder="One row is …"></textarea>
+
+    <h3>Problems found in the raw file</h3>
+    <ul id="issues" class="issues"></ul>
+
+    <h3>Does this look like real data?</h3>
+    <div id="provenance" class="callout"></div>
+    <label for="note-provenance">Your source, license and provenance note</label>
+    <textarea id="note-provenance" data-note="provenance" rows="3" placeholder="Where did the file come from? Is there a license? What does it NOT tell us?"></textarea>
+
+    <h3>Columns: your data dictionary</h3>
+    <p class="muted">Classify each column and write what you verified it means. This goes into your report.</p>
+    <div id="columns"></div>
+    <div class="callout warn">Do not delete missing values automatically. Ask what they mean. A blank metric may mean “not collected,” not zero.</div>
+
+    <h3>First rows</h3>
+    <div id="head"></div>
+    <p><button class="btn primary" type="button" data-goto="3">Next: clean a copy →</button></p>
+  </div>
+</section>
+
+<!-- ============================================================ 3 CLEAN -->
+<section id="panel-3" role="tabpanel" aria-labelledby="tab-3" tabindex="0" hidden>
+  <p class="eyebrow">STEP 3 · CLEAN A COPY</p>
+  <h2>Every cleaning choice should be one you can defend</h2>
+  <p id="clean-empty" class="muted">Load a dataset in step 2 first.</p>
+  <div id="clean-out" hidden>
+    <div id="clean-tiles" class="tiles"></div>
+    <ol id="clean-steps" class="steps"></ol>
+    <div class="callout warn" id="clean-note"></div>
+
+    <h3>Focus on one slice</h3>
+    <p class="muted">The brand posts on Instagram, so the explore step can look at Instagram posts only. Choose “All rows” to compare platforms.</p>
+    <div class="row">
+      <label>Column <select id="focus-col"></select></label>
+      <label>Value <select id="focus-val"></select></label>
+      <span id="focus-info" class="muted"></span>
+    </div>
+
+    <h3>Blank values left in the cleaned copy</h3>
+    <div id="missing-after"></div>
+    <p><button class="btn primary" type="button" data-goto="4">Next: explore →</button></p>
+  </div>
+</section>
+
+<!-- ============================================================ 4 EXPLORE -->
+<section id="panel-4" role="tabpanel" aria-labelledby="tab-4" tabindex="0" hidden>
+  <p class="eyebrow">STEP 4 · EDA</p>
+  <h2>Turn columns into useful questions</h2>
+  <p id="explore-empty" class="muted">Load a dataset in step 2 first.</p>
+  <div id="explore-ui" hidden>
+    <div class="controls">
+      <label>Compare groups of <select id="sel-group"></select></label>
+      <label>Measured by <select id="sel-metric"></select></label>
+      <label>Minimum posts per group <input type="number" id="sel-min" value="30" min="1" max="100000"></label>
+      <label>Scatter X <select id="sel-x"></select></label>
+      <label>Scatter Y <select id="sel-y"></select></label>
+      <label class="check"><input type="checkbox" id="sel-focus" checked> Only the focused slice</label>
+    </div>
+    <p id="explore-error" class="error" role="alert" hidden></p>
+    <p id="explore-scope" class="muted"></p>
+    <div id="explore-warnings"></div>
+    <div id="explore-out">
+      <h3 id="h-group"></h3>
+      <div id="chart-group" class="chart"></div>
+      <div id="table-group"></div>
+      <h3 id="h-dist"></h3>
+      <div id="chart-dist" class="chart"></div>
+      <p id="dist-facts" class="muted"></p>
+      <h3 id="h-scatter"></h3>
+      <div id="chart-scatter" class="chart"></div>
+      <p id="scatter-facts" class="muted"></p>
+      <div id="weekday-block" hidden>
+        <h3 id="h-weekday"></h3>
+        <div id="chart-weekday" class="chart"></div>
+        <div id="table-weekday"></div>
+      </div>
+    </div>
+    <p><button class="btn primary" type="button" data-goto="5">Next: say what it means →</button></p>
+  </div>
+</section>
+
+<!-- ============================================================ 5 INTERPRET -->
+<section id="panel-5" role="tabpanel" aria-labelledby="tab-5" tabindex="0" hidden>
+  <p class="eyebrow">STEP 5 · BUSINESS INTERPRETATION</p>
+  <h2>Numbers are not recommendations until we explain them</h2>
+  <div class="callout blue">Do not say a type of content is best just because its total likes are higher. Check how many posts are in each group, and whether you have reach, impressions, or audience-size information.</div>
+  <div id="interpret-warnings"></div>
+  <div class="frame">
+    <label for="note-finding"><strong>Observation 1</strong> · Finding: what pattern do you actually see in this dataset?</label>
+    <textarea id="note-finding" data-note="finding" rows="2"></textarea>
+    <label for="note-evidence"><strong>Evidence</strong> · Which count, statistic, or chart supports it?</label>
+    <textarea id="note-evidence" data-note="evidence" rows="2"></textarea>
+    <label for="note-finding2"><strong>Observation 2</strong> · A second finding</label>
+    <textarea id="note-finding2" data-note="finding2" rows="2"></textarea>
+    <label for="note-evidence2"><strong>Evidence</strong> for observation 2</label>
+    <textarea id="note-evidence2" data-note="evidence2" rows="2"></textarea>
+    <label for="note-action"><strong>Recommendation</strong> · Action: what should a marketer test next?</label>
+    <textarea id="note-action" data-note="action" rows="2"></textarea>
+    <label for="note-limitation"><strong>Limitation</strong> · What can't this dataset tell us?</label>
+    <textarea id="note-limitation" data-note="limitation" rows="2"></textarea>
+  </div>
+  <blockquote class="say"><span class="eyebrow">TEMPLATE, NOT A FINDING</span>“In this dataset, category X has a higher median number of comments than category Y. The brand could test more posts in category X and compare results using a consistent metric.”</blockquote>
+  <h3>Before you write it down</h3>
+  <ul class="checks">
+    <li>Did I compare medians as well as means?</li>
+    <li>Does each group have enough posts?</li>
+    <li>Am I claiming anything about reach, Pakistan, or paid ads? The data cannot support that.</li>
+  </ul>
+  <p><button class="btn primary" type="button" data-goto="6">Next: scale the data →</button></p>
+</section>
+
+<!-- ============================================================ 6 SCALE -->
+<section id="panel-6" role="tabpanel" aria-labelledby="tab-6" tabindex="0" hidden>
+  <p class="eyebrow">STEP 6 · DISCOVER THE NEED</p>
+  <h2>Make the data bigger, then measure</h2>
+  <p>Run the <strong>same</strong> simple analysis on repeated copies of your data. Repeated copies are a scaling experiment, not new real-world evidence. We are not trying to make Pandas fail.</p>
+  <p id="scale-empty" class="muted">Load a dataset in step 2 first.</p>
+  <div id="scale-ui" hidden>
+    <fieldset class="factors">
+      <legend>Multipliers to run</legend>
+      <label><input type="checkbox" name="factor" value="1" checked> 1x</label>
+      <label><input type="checkbox" name="factor" value="10" checked> 10x</label>
+      <label><input type="checkbox" name="factor" value="100" checked> 100x</label>
+      <label><input type="checkbox" name="factor" value="1000"> 1000x</label>
+    </fieldset>
+    <p><button id="scale-btn" class="btn primary" type="button">Run the experiment</button> <span id="scale-status" class="muted" role="status"></span></p>
+    <p id="scale-error" class="error" role="alert" hidden></p>
+    <div id="scale-out" hidden>
+      <div id="scale-table"></div>
+      <div id="chart-scale" class="chart"></div>
+      <p class="muted" id="scale-note"></p>
+    </div>
+    <div class="callout">Pandas may handle millions of rows on some computers. There is <strong>no universal row count</strong> at which it “fails.” The need for Spark or distributed systems depends on data size, the operation, hardware, and service requirements. Spark is worth investigating when volume, processing time, or distributed storage needs justify it. It is not a requirement for a 2,000-row file.</div>
+    <h3>Reflect</h3>
+    <ol>
+      <li>Which operation became slowest or most inconvenient as the rows grew?</li>
+      <li>How much memory did the largest run use?</li>
+      <li>Repeated rows are easier for a computer than varied real data. How might that change the result?</li>
+      <li>What would change if the data were 100 GB, arrived every minute, or had to be shared by a whole team?</li>
+    </ol>
+    <label for="note-reflect" class="visually-hidden">Your reflection</label>
+    <textarea id="note-reflect" data-note="reflect" rows="4" placeholder="Use your own numbers from the table above."></textarea>
+    <p><button class="btn primary" type="button" data-goto="7">Next: analytics preview →</button></p>
+  </div>
+</section>
+
+<!-- ============================================================ 7 ANALYTICS -->
+<section id="panel-7" role="tabpanel" aria-labelledby="tab-7" tabindex="0" hidden>
+  <p class="eyebrow">STEP 7 · CONNECT TO ANALYTICS</p>
+  <h2>Classification, clustering, and regression, as a preview</h2>
+  <div class="cards three">
+    <div class="card"><h4>Classification</h4><p>Predict a category, such as high or low engagement, after defining a defensible label.</p></div>
+    <div class="card"><h4>Clustering</h4><p>Group posts with similar features. Scale numeric features first.</p></div>
+    <div class="card"><h4>Regression</h4><p>Predict a number such as likes, if the data supports it.</p></div>
+  </div>
+  <div class="callout warn"><strong>Avoid data leakage.</strong> The label is built from likes, comments and shares, so those columns and anything made from them are never used as features. Models are scored on a held-out test set and compared with a baseline.</div>
+  <p id="models-empty" class="muted">Load a dataset in step 2 first.</p>
+  <div id="models-ui" hidden>
+    <p><button id="models-btn" class="btn primary" type="button">Run the three demos</button> <span id="models-status" class="muted" role="status"></span></p>
+    <p id="models-error" class="error" role="alert" hidden></p>
+    <div id="models-out"></div>
+    <h3>Exit question</h3>
+    <p>Which of these techniques would help answer your marketing question, and what evidence would you need?</p>
+    <label for="note-analytics" class="visually-hidden">Your answer</label>
+    <textarea id="note-analytics" data-note="analytics" rows="3"></textarea>
+    <p><button class="btn primary" type="button" data-goto="8">Next: submit →</button></p>
+  </div>
+</section>
+
+<!-- ============================================================ 8 SUBMIT -->
+<section id="panel-8" role="tabpanel" aria-labelledby="tab-8" tabindex="0" hidden>
+  <p class="eyebrow">STEP 8 · DELIVERABLE AND NEXT STEP</p>
+  <h2>Leave with a small, explainable business analysis</h2>
+  <h3>Submission checklist</h3>
+  <p class="muted">These tick themselves from what you have done here. It is a guide, not a grade.</p>
+  <ul id="checklist" class="checklist"></ul>
+
+  <h3>Simple 10-mark rubric</h3>
+  <div class="table-wrap" tabindex="0" role="region" aria-label="Rubric table">
+    <table>
+      <thead><tr><th>Criterion</th><th class="num">Marks</th></tr></thead>
+      <tbody>
+        <tr><td>Data understanding and course concepts</td><td class="num">1</td></tr>
+        <tr><td>Cleaning and quality checks</td><td class="num">1</td></tr>
+        <tr><td>EDA and statistics</td><td class="num">2</td></tr>
+        <tr><td>Charts and interpretation</td><td class="num">2</td></tr>
+        <tr><td>Scaling experiment and tool justification</td><td class="num">2</td></tr>
+        <tr><td>Analytics concept, recommendation, and presentation</td><td class="num">2</td></tr>
+        <tr><th scope="row">Total</th><td class="num"><strong>10</strong></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>Closing question</h3>
+  <p><strong>What does the data tell us, what business problem does it reveal, and what should the business do next?</strong></p>
+  <label for="note-closing" class="visually-hidden">Your answer</label>
+  <textarea id="note-closing" data-note="closing" rows="4"></textarea>
+
+  <h3>Your report</h3>
+  <p class="muted">The report is built in your browser from everything you entered. What you type is saved only in this browser and is never sent to the server.</p>
+  <p><button id="report-btn" class="btn primary" type="button">Download report (.md)</button>
+     <button id="report-preview-btn" class="btn" type="button">Preview</button>
+     <button id="clear-notes" class="btn" type="button">Clear my notes</button></p>
+  <pre id="report-preview" class="preview" hidden tabindex="0"></pre>
+
+  <div class="callout">Optional class hashtag: <strong>#UMTDataDetective</strong>. Posting publicly is optional; you can submit privately instead.</div>
+  <h3>Next project</h3>
+  <p>Add genuine or clearly labelled sample paid-campaign data (spend, impressions, clicks, conversions) before moving to Meta Ads and Google Ads analysis. Organic engagement data alone cannot calculate ROAS or paid-ad performance.</p>
+</section>
+
+</main>
+
+<footer class="wrap foot">
+  <p><a href="/">← Back to the Data Detective website</a> (analyse a YouTube channel)</p>
+  <p>Data Detective is a teaching tool. Results depend entirely on the data you load. The bundled dataset is not verified as data from any real brand, and nothing here is advice about one.</p>
+</footer>
+
+<div id="tip" class="tip" role="presentation" hidden></div>
+<script src="/static/charts.js"></script>
+<script src="/static/app.js"></script>
+</body>
+</html>
