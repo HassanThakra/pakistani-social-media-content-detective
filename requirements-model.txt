@@ -1,0 +1,5 @@
+# Only for SENTIMENT_BACKEND=model (Hugging Face Spaces). Not needed for the default word-list scorer.
+--extra-index-url https://download.pytorch.org/whl/cpu
+torch>=2.2
+transformers>=4.40
+sentencepiece>=0.2

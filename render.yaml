@@ -1,0 +1,20 @@
+services:
+  - type: web
+    name: data-detective
+    runtime: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn -w 1 --threads 4 --timeout 120 app:app
+    healthCheckPath: /healthz
+    autoDeploy: true            # redeploy on every push to the connected GitHub branch
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.13.0
+      - key: TRUST_PROXY
+        value: "1"
+      - key: SCALING_MAX_ROWS
+        value: "200000"
+      - key: YOUTUBE_API_KEY    # secret: set it in the Render dashboard, never in git
+        sync: false
+      - key: YT_DAILY_QUOTA     # stay under Google's free 10,000 units a day
+        value: "9000"

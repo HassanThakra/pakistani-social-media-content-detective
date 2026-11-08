@@ -1,0 +1,12 @@
+__pycache__/
+*.pyc
+.pytest_cache/
+.venv/
+venv/
+shots/
+*.log
+.DS_Store
+.env
+tests/fixtures/recorded/*.key
+data/to_label.csv
+data/sentiment_labelled.csv
