@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block page_id %}privacy{% endblock %}
+{% block body %}
+<main id="main" class="wrap prose">
+  <h1>Data and privacy</h1>
+  <h2>What data is used</h2>
+  <p>Only public data from the YouTube Data API: a channel’s name, subscriber count (if shown), and for each public video its title, publish time, length, category, tag count, and its view, like and comment counts. Comment text is fetched only if you open the Sentiment page and press the collect button. Then, for each comment, the site keeps its text, date and like count, and which video it is on. It does not keep author names, profile links or any account ID.</p>
+  <h2>What we keep</h2>
+  <ul>
+    <li>Collected comments stay in the server’s memory with your result, are never written to disk, and are deleted with it. Comments are public on YouTube; this site only summarises them and shows a few short examples without names.</li>
+    <li>Results live in the server’s memory only, never on disk, and are deleted after a few hours. Your shareable link stops working then.</li>
+    <li>Anyone with your result link can open it until it expires. The link is long and random, but treat it like a private link rather than a secret.</li>
+    <li>Result pages are marked so search engines do not index them.</li>
+    <li>For rate limiting, the server briefly counts requests per network address in memory.</li>
+  </ul>
+  <h2>The YouTube API key</h2>
+  <p>The key stays on the server. It is never sent to your browser and never written to logs. Everything shown links back to the original videos on YouTube.</p>
+  <h2>Daily limit</h2>
+  <p>YouTube gives this site a daily allowance shared by all visitors. If it is used up you will see a message to come back tomorrow; results you already opened keep working until they expire.</p>
+  <p>This page is a plain-language description, not legal advice. Use of YouTube data is subject to the <a href="https://developers.google.com/youtube/terms/api-services-terms-of-service" rel="noopener noreferrer">YouTube API Services Terms of Service</a> and <a href="https://policies.google.com/privacy" rel="noopener noreferrer">Google’s Privacy Policy</a>.</p>
+</main>
+{% endblock %}

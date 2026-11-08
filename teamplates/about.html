@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block page_id %}about{% endblock %}
+{% block body %}
+<main id="main" class="wrap prose">
+  <h1>About Data Detective</h1>
+  <p>Data Detective began as a teaching project built around one idea: <em>start with a business question, not a Big Data tool.</em> A small team wants to know which content gets attention and what to publish next. The right first move is to look at the data with ordinary tools, say what it shows, and say what it cannot show.</p>
+  <p>This site applies that approach to YouTube. You give it a channel or a brand name. It fetches the channel’s public videos and walks through the same steps a careful analyst would take: inspect, clean, explore, interpret, scale, and model.</p>
+  <h2>Who it is for</h2>
+  <p>Students learning data analysis, marketers who want a quick and honest read of a channel, and anyone who wants to see how much a small public dataset can and cannot tell them.</p>
+  <h2>What it will not do</h2>
+  <ul>
+    <li>It does not find ads. YouTube has no public ads API. Search results are called “videos about the brand”, never ads.</li>
+    <li>It does not analyse Instagram or other platforms from a name. That would need scraping, which those platforms’ terms do not allow.</li>
+    <li>It does not report reach or impressions, or show what causes a video to do well.</li>
+  </ul>
+  <p class="muted">The source code is open to read; see the repository’s README for setup and the data rules the tool follows.</p>
+</main>
+{% endblock %}

@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{ title }}</title>
+{% if desc %}<meta name="description" content="{{ desc }}">
+<meta property="og:description" content="{{ desc }}">{% endif %}
+<meta property="og:title" content="{{ title }}">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="{{ site }}">
+<meta property="og:image" content="{{ url_for('static', filename='og.png', _external=True) }}">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#0a6a7a">
+<link rel="icon" type="image/svg+xml" href="{{ url_for('static', filename='favicon.svg') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='site.css') }}">
+</head>
+<body data-page="{% block page_id %}{% endblock %}">
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-head">
+  <div class="wrap head-row">
+    <a class="brand" href="/" aria-label="{{ site }} home"><span class="brand-mark" aria-hidden="true"></span>{{ site }}</a>
+    <nav class="site-nav" aria-label="Site">
+      <a href="/how-it-works"{% if active == 'how' %} aria-current="page"{% endif %}>How it works</a>
+      <a href="/about"{% if active == 'about' %} aria-current="page"{% endif %}>About</a>
+      <a href="/privacy"{% if active == 'privacy' %} aria-current="page"{% endif %}>Data &amp; privacy</a>
+      <button id="theme-btn" class="btn ghost" type="button" aria-label="Switch colour theme">Theme: auto</button>
+    </nav>
+  </div>
+</header>
+{% block body %}{% endblock %}
+<footer class="site-foot">
+  <div class="wrap foot-row">
+    <p>Uses public data from the YouTube Data API. Not affiliated with or endorsed by YouTube or Google. Results describe one snapshot and cannot show causes.</p>
+    <p><a href="/how-it-works">How it works</a> · <a href="/privacy">Data &amp; privacy</a> · <a href="/workbench">CSV workbench</a></p>
+  </div>
+</footer>
+<div id="tip" class="tip" role="presentation" hidden></div>
+<script src="{{ url_for('static', filename='charts.js') }}"></script>
+<script src="{{ url_for('static', filename='site.js') }}"></script>
+</body>
+</html>
